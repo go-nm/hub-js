@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/go-nm/hub.git"
+    "url": "git+https://gitlab.com/go-nm/hub.git"
   },
   "keywords": [
     "websocket",
@@ -24,9 +24,9 @@
   "author": "Nikko Miu <nikkoamiu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/go-nm/hub/issues"
+    "url": "https://gitlab.com/go-nm/hub/issues"
   },
-  "homepage": "https://github.com/go-nm/hub#readme",
+  "homepage": "https://gitlab.com/go-nm/hub#readme",
   "devDependencies": {
     "@types/jest": "^24.0.12",
     "jest": "^24.8.0",
