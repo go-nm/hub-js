@@ -5,11 +5,12 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "files": [
-    "dist",
-    "lib"
+    "dist"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "tslint --config tslint.json --project tsconfig.json",
+    "build": "rollup -c",
+    "test": "jest --config=jest.config.json"
   },
   "repository": {
     "type": "git",
@@ -27,8 +28,17 @@
   },
   "homepage": "https://github.com/go-nm/hub#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.12",
+    "jest": "^24.8.0",
+    "jest-simple-summary": "^1.0.2",
+    "rimraf": "^2.6.3",
     "rollup": "^1.11.3",
+    "rollup-plugin-babel-minify": "^8.0.0",
     "rollup-plugin-filesize": "^6.0.1",
-    "rollup-plugin-typescript2": "^0.21.0"
+    "rollup-plugin-typescript2": "^0.21.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.4.5"
   }
 }

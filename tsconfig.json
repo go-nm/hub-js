@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": false,
+    "removeComments": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "jsx": "react",
+    "jsxFactory": "createElement",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "outDir": ".tscompile",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmitHelpers": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es5"
+  },
+  "include": [
+    "src/**/*",
+    "./types.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*.spec.*",
+    "test",
+    "docs",
+    "docs-dist",
+    "dist",
+    ".tscompile"
+  ]
+}

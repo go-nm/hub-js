@@ -1,0 +1,21 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint-config-airbnb"
+  ],
+  "rules": {
+    "import-name": false,
+    "max-line-length": false,
+    "array-type": [
+      true,
+      "array"
+    ],
+    "trailing-comma": true
+  },
+  "rulesDirectory": [],
+  "exclude": [
+    "node_modules/**",
+    "dist/**",
+    "coverage/**"
+  ]
+}
