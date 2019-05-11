@@ -5,11 +5,11 @@ export interface RoomEventHandlersType {
 }
 
 export class Room {
-  ws: WebSocket;
-  isJoined: boolean;
-  topic: string;
-  room: string;
-  eventHandlers: RoomEventHandlersType = {};
+  private ws: WebSocket;
+  private isJoined: boolean;
+  private topic: string;
+  private room: string;
+  private eventHandlers: RoomEventHandlersType = {};
 
   static alreadyJoinedError = new Error('Already Joined');
   static notJoinedError = new Error('Not Joined');
@@ -48,6 +48,10 @@ export class Room {
   }
 
   leave(payload: any) {
+    if (!this.isJoined) {
+      return;
+    }
+
     this.ws.send(JSON.stringify({
       payload,
       topic: this.topic,
