@@ -12,7 +12,7 @@ describe('room', () => {
     const room = new Room(ws, channel);
 
     // Assert
-    expect(room).not.toBeNull();
+    expect(room).toBeDefined();
   });
 
   it('can join the room', () => {

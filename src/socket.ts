@@ -22,7 +22,7 @@ export class Socket {
   closeHandlers: WSEventHandler[] = [];
   errorHandlers: WSEventHandler[] = [];
 
-  constructor(url: string, opts: Partial<SocketOpts>) {
+  constructor(url: string, opts?: Partial<SocketOpts>) {
     this.url = url;
     this.opts = { ...this.opts, ...opts };
     this.currentTimeout = this.opts.timeout;
