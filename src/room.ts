@@ -22,7 +22,7 @@ export class Room {
     this.room = room;
   }
 
-  join() {
+  join(opts?: any) {
     if (this.isJoined) {
       throw Room.alreadyJoinedError;
     }
@@ -31,6 +31,7 @@ export class Room {
       topic: this.topic,
       room: this.room,
       event: 'join',
+      payload: opts,
     }));
   }
 

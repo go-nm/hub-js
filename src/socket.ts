@@ -6,21 +6,21 @@ export interface SocketOpts {
 
 export type WSEventHandler = (event: Event) => void;
 
-export interface RoomType {
+interface RoomType {
   [key: string]: Room;
 }
 
 export class Socket {
-  ws: WebSocket;
+  ws: WebSocket | null;
   url: string;
   opts: SocketOpts = {
     timeout: 1000,
   };
   currentTimeout: number = 0;
-  rooms: RoomType = {};
   openHandlers: WSEventHandler[] = [];
   closeHandlers: WSEventHandler[] = [];
   errorHandlers: WSEventHandler[] = [];
+  private rooms: RoomType = {};
 
   static notConnectedError = new Error('Not connected to WebSocket');
 
@@ -47,6 +47,8 @@ export class Socket {
     });
 
     this.ws.addEventListener('close', (e) => {
+      this.ws = null;
+
       if (!e.wasClean) {
         console.error('Socket closed:', e);
         setTimeout(this.connect, this.currentTimeout);
@@ -55,6 +57,13 @@ export class Socket {
 
       // Call all the user defined callbacks
       this.closeHandlers.forEach(fn => fn(e));
+    });
+
+    this.ws.addEventListener('error', (e) => {
+      console.error('Socket error:', e);
+
+      // Call all the user defined callbacks
+      this.errorHandlers.forEach(fn => fn(e));
     });
 
     this.ws.addEventListener('message', (e) => {
@@ -67,23 +76,16 @@ export class Socket {
         console.warn(`Channel (${channel}) not found for message:`, msg);
       }
     });
-
-    this.ws.addEventListener('error', (e) => {
-      console.error('Socket error:', e);
-
-      // Call all the user defined callbacks
-      this.errorHandlers.forEach(fn => fn(e));
-    });
   }
 
-  join(roomName: string) {
+  join(roomName: string, opts?: any) {
     if (!this.ws) {
       throw Socket.notConnectedError;
     }
 
     const room = new Room(this.ws, roomName);
     this.rooms[roomName] = room;
-    room.join();
+    room.join(opts);
     return room;
   }
 

@@ -1,6 +1,5 @@
 import typescript from 'rollup-plugin-typescript2';
 import filesize from 'rollup-plugin-filesize';
-import minify from 'rollup-plugin-babel-minify';
 import pkg from './package.json';
 
 const config = {
@@ -12,10 +11,6 @@ const config = {
   plugins: [
     typescript({
       clean: true,
-		}),
-		minify({
-			comments: false,
-			sourceMap: false,
 		}),
     filesize(),
   ],
