@@ -22,6 +22,8 @@ export class Socket {
   closeHandlers: WSEventHandler[] = [];
   errorHandlers: WSEventHandler[] = [];
 
+  static notConnectedError = new Error('Not connected to WebSocket');
+
   constructor(url: string, opts?: Partial<SocketOpts>) {
     this.url = url;
     this.opts = { ...this.opts, ...opts };
@@ -75,6 +77,10 @@ export class Socket {
   }
 
   join(roomName: string) {
+    if (!this.ws) {
+      throw Socket.notConnectedError;
+    }
+
     const room = new Room(this.ws, roomName);
     this.rooms[roomName] = room;
     room.join();
