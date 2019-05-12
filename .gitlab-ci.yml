@@ -14,6 +14,11 @@ stages:
     paths:
     - node_modules/
 
+build:
+  <<: *testing
+  script:
+    - npm run build
+
 unit test:
   <<: *testing
   script:
