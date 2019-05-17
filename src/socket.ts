@@ -17,7 +17,7 @@ export interface SocketOpts {
 
 /**
  * The event handler type for the callback functions
- * 
+ *
  * @param event - The event that was passed from the WebSocket connection
  */
 export type WSEventHandler = (event: Event) => void;
@@ -47,7 +47,7 @@ export class Socket {
 
   /**
    * Create the WebSocket object for the URL
-   * 
+   *
    * @param url - The full URL to connect to the WebSocket on. E.g. `ws://localhost:9000/ws?token=test`
    * @param opts - Options object for the connection.
    */
@@ -111,7 +111,7 @@ export class Socket {
 
   /**
    * Join a channel on the connection.
-   * 
+   *
    * @param channel - The cobined topic and room string to connect to. E.g. `chat:342`
    * @param opts - Optional payload to send to the server on join.
    */
@@ -128,7 +128,7 @@ export class Socket {
 
   /**
    * Register a callback function for when the WebSocket connection is successfully opened with the server.
-   * 
+   *
    * @param fn - The callback function handler
    */
   onOpen(fn: WSEventHandler) {
@@ -137,9 +137,9 @@ export class Socket {
 
   /**
    * Register a callback function for when the WebSocket connection is closed.
-   * 
+   *
    * **Note:** This will be called when the connection is gracefully disconnected and when it errors.
-   * 
+   *
    * @param fn - The callback function handler
    */
   onClose(fn: WSEventHandler) {
@@ -148,7 +148,7 @@ export class Socket {
 
   /**
    * Register a callback function for when the WebSocket connection falis.
-   * 
+   *
    * @param fn - The callback function handler
    */
   onError(fn: WSEventHandler) {
