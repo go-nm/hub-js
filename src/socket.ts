@@ -1,20 +1,41 @@
 import { Room } from './room';
 
+/**
+ * The options for connecting and managing the WebSocket connection with the server.
+ */
 export interface SocketOpts {
+  /**
+   * The amount of time to wait before giving up on the connection.
+   */
   timeout: number;
+
+  /**
+   * The scale used to backoff the timeout.
+   */
+  backoffScale: number;
 }
 
+/**
+ * The event handler type for the callback functions
+ * 
+ * @param event - The event that was passed from the WebSocket connection
+ */
 export type WSEventHandler = (event: Event) => void;
 
 interface RoomType {
   [key: string]: Room;
 }
 
+/**
+ * The root connection for the WebSocket client.
+ * It contains the WebSocket connection and is responsible for creating the channel connections.
+ */
 export class Socket {
   ws: WebSocket | null;
   url: string;
   opts: SocketOpts = {
     timeout: 1000,
+    backoffScale: 1.5,
   };
   currentTimeout: number = 0;
   openHandlers: WSEventHandler[] = [];
@@ -24,6 +45,12 @@ export class Socket {
 
   static notConnectedError = new Error('Not connected to WebSocket');
 
+  /**
+   * Create the WebSocket object for the URL
+   * 
+   * @param url - The full URL to connect to the WebSocket on. E.g. `ws://localhost:9000/ws?token=test`
+   * @param opts - Options object for the connection.
+   */
   constructor(url: string, opts?: Partial<SocketOpts>) {
     this.url = url;
     this.opts = { ...this.opts, ...opts };
@@ -35,6 +62,10 @@ export class Socket {
     this.onError = this.onError.bind(this);
   }
 
+  /**
+   * Connect to the WebSocket server.
+   * It is recommended that all of the event handlers are registered before connecting.
+   */
   connect() {
     this.ws = new WebSocket(this.url);
     this.ws.addEventListener('open', (e) => {
@@ -52,7 +83,7 @@ export class Socket {
       if (!e.wasClean) {
         console.error('Socket closed:', e);
         setTimeout(this.connect, this.currentTimeout);
-        this.currentTimeout = this.currentTimeout * 1.5;
+        this.currentTimeout = this.currentTimeout * this.opts.backoffScale;
       }
 
       // Call all the user defined callbacks
@@ -78,25 +109,48 @@ export class Socket {
     });
   }
 
-  join(roomName: string, opts?: any) {
+  /**
+   * Join a channel on the connection.
+   * 
+   * @param channel - The cobined topic and room string to connect to. E.g. `chat:342`
+   * @param opts - Optional payload to send to the server on join.
+   */
+  join(channel: string, opts?: any) {
     if (!this.ws) {
       throw Socket.notConnectedError;
     }
 
-    const room = new Room(this.ws, roomName);
-    this.rooms[roomName] = room;
+    const room = new Room(this.ws, channel);
+    this.rooms[channel] = room;
     room.join(opts);
     return room;
   }
 
+  /**
+   * Register a callback function for when the WebSocket connection is successfully opened with the server.
+   * 
+   * @param fn - The callback function handler
+   */
   onOpen(fn: WSEventHandler) {
     this.openHandlers.push(fn);
   }
 
+  /**
+   * Register a callback function for when the WebSocket connection is closed.
+   * 
+   * **Note:** This will be called when the connection is gracefully disconnected and when it errors.
+   * 
+   * @param fn - The callback function handler
+   */
   onClose(fn: WSEventHandler) {
     this.closeHandlers.push(fn);
   }
 
+  /**
+   * Register a callback function for when the WebSocket connection falis.
+   * 
+   * @param fn - The callback function handler
+   */
   onError(fn: WSEventHandler) {
     this.errorHandlers.push(fn);
   }
