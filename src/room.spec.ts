@@ -36,7 +36,7 @@ describe('room', () => {
     room.messageReceived('joined', '');
 
     // Act
-    expect(() => room.join()).toThrow(Room.alreadyJoinedError);
+    expect(() => room.join()).toThrow(Room.errorAlreadyJoined);
   });
 
   it('can send an event to the server when joined', () => {
@@ -67,7 +67,7 @@ describe('room', () => {
     const room = new Room(ws, channel);
 
     // Act
-    expect(() => room.send(event, payload)).toThrow(Room.notJoinedError);
+    expect(() => room.send(event, payload)).toThrow(Room.errorNotJoined);
   });
 
   it('does not allow sending messages after left message received', () => {
@@ -80,7 +80,7 @@ describe('room', () => {
     room.messageReceived('left', '');
 
     // Act
-    expect(() => room.send(event, payload)).toThrow(Room.notJoinedError);
+    expect(() => room.send(event, payload)).toThrow(Room.errorNotJoined);
   });
 
   it('can leave the room', () => {

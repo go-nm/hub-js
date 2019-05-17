@@ -19,7 +19,7 @@ export class Room {
 
   /**
    * The constructor is generally used by the Socket class to create a new instance of the room for you.
-   * 
+   *
    * @param ws - The WebSocket connection to use to join the room.
    * @param fullName - The full name of the room to join. In the format of `name:id`
    */
@@ -33,7 +33,7 @@ export class Room {
 
   /**
    * Trys to join the room.
-   * 
+   *
    * @param opts - Optional payload to pass to the server.
    * @throws {Room.errorAlreadyJoined}
    */
@@ -52,7 +52,7 @@ export class Room {
 
   /**
    * Send an event to the server.
-   * 
+   *
    * @param event - The event name to send to the server.
    * @param payload - The data to pass to the server for the event.
    */
@@ -71,7 +71,7 @@ export class Room {
 
   /**
    * Leave the room.
-   * 
+   *
    * @param payload - Optional payload to pass to the server for the close event.
    */
   leave(payload: any) {
@@ -89,7 +89,7 @@ export class Room {
 
   /**
    * Register a handler for when a new event comes in from the server.
-   * 
+   *
    * @param event - The name of the event to register against.
    * @param handler - The handler function to call when the event is sent from the server.
    */
