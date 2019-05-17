@@ -28,11 +28,12 @@ describe('socket', () => {
   it('can create an instance with opts', () => {
     // Act
     const timeout = 9999;
+    const backoffScale = 1.25;
     const sock = new Socket(url, { timeout });
 
     // Assert
     expect(sock).toBeDefined();
-    expect(sock.opts).toEqual({ timeout });
+    expect(sock.opts).toEqual({ backoffScale, timeout });
   });
 
   it('can connect', () => {
