@@ -25,14 +25,24 @@ describe('socket', () => {
     expect(sock).toBeDefined();
   });
 
-  it('can create an instance with opts', () => {
+  it('can create an instance with custom timeout', () => {
     // Act
     const timeout = 9999;
     const sock = new Socket(url, { timeout });
 
     // Assert
     expect(sock).toBeDefined();
-    expect(sock.opts).toEqual({ timeout });
+    expect(sock.opts.timeout).toEqual(timeout);
+  });
+
+  it('can create an instance with custom backoffScale', () => {
+    // Act
+    const backoffScale = 9999;
+    const sock = new Socket(url, { backoffScale });
+
+    // Assert
+    expect(sock).toBeDefined();
+    expect(sock.opts.backoffScale).toEqual(backoffScale);
   });
 
   it('can connect', () => {
