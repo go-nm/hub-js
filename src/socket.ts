@@ -38,9 +38,9 @@ export class Socket {
     backoffScale: 1.5,
   };
   currentTimeout: number = 0;
-  openHandlers: WSEventHandler[] = [];
-  closeHandlers: WSEventHandler[] = [];
-  errorHandlers: WSEventHandler[] = [];
+  private openHandlers: WSEventHandler[] = [];
+  private closeHandlers: WSEventHandler[] = [];
+  private errorHandlers: WSEventHandler[] = [];
   private rooms: RoomType = {};
 
   static notConnectedError = new Error('Not connected to WebSocket');
